@@ -34,6 +34,7 @@ services:
       - "./Monitoring Pekerjaan.xlsx:/app/workbook.xlsx:ro"
     labels:
       traefik.enable: "true"
+      traefik.docker.network: "${TRAEFIK_NETWORK:-web}"
       traefik.http.routers.monitoring-backend.rule: "Host(`${APP_DOMAIN:-monitoring-web.cbqaglobal.co.id}`) && PathPrefix(`/api`)"
       traefik.http.routers.monitoring-backend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-backend.priority: "100"
@@ -54,6 +55,7 @@ services:
       - backend
     labels:
       traefik.enable: "true"
+      traefik.docker.network: "${TRAEFIK_NETWORK:-web}"
       traefik.http.routers.monitoring-frontend.rule: "Host(`${APP_DOMAIN:-monitoring-web.cbqaglobal.co.id}`)"
       traefik.http.routers.monitoring-frontend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-frontend.priority: "1"
