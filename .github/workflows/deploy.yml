@@ -57,11 +57,6 @@ jobs:
         with:
           ssh-private-key: ${{ secrets.VPS_SSH_KEY }}
 
-      - name: Trust VPS host key
-        run: |
-          mkdir -p ~/.ssh
-          ssh-keyscan -p "${VPS_SSH_PORT}" "${VPS_HOST}" >> ~/.ssh/known_hosts
-
       - name: Sync files to VPS
         run: |
           rsync -az --delete \
@@ -70,10 +65,10 @@ jobs:
             --exclude 'frontend/dist' \
             --exclude 'backend/bin' \
             --exclude '.github/workflows' \
-            -e "ssh -p ${VPS_SSH_PORT}" \
+            -e "ssh -p ${VPS_SSH_PORT} -o StrictHostKeyChecking=accept-new" \
             ./ "${VPS_USER}@${VPS_HOST}:${VPS_APP_DIR}/"
 
       - name: Deploy containers
         run: |
-          ssh -p "${VPS_SSH_PORT}" "${VPS_USER}@${VPS_HOST}" \
+          ssh -p "${VPS_SSH_PORT}" -o StrictHostKeyChecking=accept-new "${VPS_USER}@${VPS_HOST}" \
             "cd '${VPS_APP_DIR}' && APP_DOMAIN='${APP_DOMAIN}' TRAEFIK_NETWORK='${TRAEFIK_NETWORK}' TRAEFIK_ENTRYPOINT='${TRAEFIK_ENTRYPOINT}' docker compose -f docker-compose.prod.yml up -d --build --remove-orphans"
