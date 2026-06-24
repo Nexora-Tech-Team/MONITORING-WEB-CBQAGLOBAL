@@ -11,8 +11,9 @@ env:
   VPS_USER: root
   VPS_APP_DIR: /root/nexora-node/apps/monitoring-web-cbqaglobal
   VPS_SSH_PORT: "22"
+  APP_DOMAIN: monitoring-web.cbqaglobal.co.id
   TRAEFIK_NETWORK: web
-  TRAEFIK_ENTRYPOINT: web
+  TRAEFIK_ENTRYPOINT: websecure
 
 jobs:
   build:
@@ -75,4 +76,4 @@ jobs:
       - name: Deploy containers
         run: |
           ssh -p "${VPS_SSH_PORT}" "${VPS_USER}@${VPS_HOST}" \
-            "cd '${VPS_APP_DIR}' && TRAEFIK_NETWORK='${TRAEFIK_NETWORK}' TRAEFIK_ENTRYPOINT='${TRAEFIK_ENTRYPOINT}' docker compose -f docker-compose.prod.yml up -d --build --remove-orphans"
+            "cd '${VPS_APP_DIR}' && APP_DOMAIN='${APP_DOMAIN}' TRAEFIK_NETWORK='${TRAEFIK_NETWORK}' TRAEFIK_ENTRYPOINT='${TRAEFIK_ENTRYPOINT}' docker compose -f docker-compose.prod.yml up -d --build --remove-orphans"

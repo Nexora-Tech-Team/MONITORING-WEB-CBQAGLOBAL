@@ -43,6 +43,7 @@ Task status is stored in PostgreSQL, so changes persist without login.
 Target VPS:
 - `72.61.209.201`
 - app path: `/root/nexora-node/apps/monitoring-web-cbqaglobal`
+- public domain: `https://monitoring-web.cbqaglobal.co.id`
 
 Pipeline uses:
 - `docker compose -f docker-compose.prod.yml up -d --build`
@@ -56,7 +57,7 @@ Optional VPS env file:
 
 Traefik defaults:
 - network: `web`
-- entrypoint: `web`
+- entrypoint: `websecure`
 
 If your Traefik network or entrypoint names are different, update:
 - `TRAEFIK_NETWORK`

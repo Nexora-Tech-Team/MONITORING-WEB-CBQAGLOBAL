@@ -34,9 +34,10 @@ services:
       - "./Monitoring Pekerjaan.xlsx:/app/workbook.xlsx:ro"
     labels:
       traefik.enable: "true"
-      traefik.http.routers.monitoring-backend.rule: "PathPrefix(`/api`)"
-      traefik.http.routers.monitoring-backend.entrypoints: "${TRAEFIK_ENTRYPOINT:-web}"
+      traefik.http.routers.monitoring-backend.rule: "Host(`${APP_DOMAIN:-monitoring-web.cbqaglobal.co.id}`) && PathPrefix(`/api`)"
+      traefik.http.routers.monitoring-backend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-backend.priority: "100"
+      traefik.http.routers.monitoring-backend.tls: "true"
       traefik.http.services.monitoring-backend.loadbalancer.server.port: "8090"
     networks:
       - internal
@@ -52,9 +53,10 @@ services:
       - backend
     labels:
       traefik.enable: "true"
-      traefik.http.routers.monitoring-frontend.rule: "PathPrefix(`/`)"
-      traefik.http.routers.monitoring-frontend.entrypoints: "${TRAEFIK_ENTRYPOINT:-web}"
+      traefik.http.routers.monitoring-frontend.rule: "Host(`${APP_DOMAIN:-monitoring-web.cbqaglobal.co.id}`)"
+      traefik.http.routers.monitoring-frontend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-frontend.priority: "1"
+      traefik.http.routers.monitoring-frontend.tls: "true"
       traefik.http.services.monitoring-frontend.loadbalancer.server.port: "80"
     networks:
       - internal
