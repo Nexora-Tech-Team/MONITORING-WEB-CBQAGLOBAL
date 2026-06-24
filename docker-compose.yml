@@ -1,0 +1,20 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: cbqa-postgres
+    environment:
+      POSTGRES_DB: cbqa
+      POSTGRES_USER: cbqa
+      POSTGRES_PASSWORD: cbqa
+    ports:
+      - "5439:5432"
+    volumes:
+      - cbqa_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U cbqa -d cbqa"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  cbqa_pgdata:
