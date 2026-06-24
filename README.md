@@ -5,6 +5,7 @@ Stack:
 - Backend: Go
 - Database: PostgreSQL
 - Docker: `docker-compose.yml` tersedia untuk Postgres
+- Production deploy: `docker-compose.prod.yml` + GitHub Actions
 
 ## Local run
 
@@ -36,3 +37,27 @@ The backend seeds task data from:
 - `Monitoring Pekerjaan.xlsx`
 
 Task status is stored in PostgreSQL, so changes persist without login.
+
+## Production deploy
+
+Target VPS:
+- `72.61.209.201`
+- app path: `/root/nexora-node/apps/monitoring-web-cbqaglobal`
+
+Pipeline uses:
+- `docker compose -f docker-compose.prod.yml up -d --build`
+- Traefik labels for `/api` and `/`
+
+Required GitHub secret:
+- `VPS_SSH_KEY` = private SSH key that can log in to the VPS as `root`
+
+Optional VPS env file:
+- copy `.env.deploy.example` to `.env` inside `/root/nexora-node/apps/monitoring-web-cbqaglobal`
+
+Traefik defaults:
+- network: `web`
+- entrypoint: `web`
+
+If your Traefik network or entrypoint names are different, update:
+- `TRAEFIK_NETWORK`
+- `TRAEFIK_ENTRYPOINT`
