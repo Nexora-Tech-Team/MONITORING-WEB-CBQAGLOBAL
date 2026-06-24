@@ -38,6 +38,7 @@ services:
       traefik.http.routers.monitoring-backend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-backend.priority: "100"
       traefik.http.routers.monitoring-backend.tls: "true"
+      traefik.http.routers.monitoring-backend.tls.certresolver: "myresolver"
       traefik.http.services.monitoring-backend.loadbalancer.server.port: "8090"
     networks:
       - internal
@@ -57,6 +58,7 @@ services:
       traefik.http.routers.monitoring-frontend.entrypoints: "${TRAEFIK_ENTRYPOINT:-websecure}"
       traefik.http.routers.monitoring-frontend.priority: "1"
       traefik.http.routers.monitoring-frontend.tls: "true"
+      traefik.http.routers.monitoring-frontend.tls.certresolver: "myresolver"
       traefik.http.services.monitoring-frontend.loadbalancer.server.port: "80"
     networks:
       - internal
