@@ -351,22 +351,28 @@ function App() {
                 </div>
               </div>
               <div className="section-list">
-                {(stats?.bySection || []).slice(0, 10).map((item) => (
-                  <button
-                    key={item.name}
-                    type="button"
-                    className="section-row section-row--clickable"
-                    onClick={() => openTaskList('all', item.name)}
-                  >
-                    <div>
-                      <strong>{item.name}</strong>
-                      <small>{item.done}/{item.total} done</small>
-                    </div>
-                    <div className="section-meter">
-                      <span style={{ width: `${Math.round((item.done / item.total) * 100)}%` }} />
-                    </div>
-                  </button>
-                ))}
+                {(stats?.bySection || []).slice(0, 10).map((item) => {
+                  const percent = item.total > 0 ? Math.round((item.done / item.total) * 100) : 0;
+                  return (
+                    <button
+                      key={item.name}
+                      type="button"
+                      className="section-row section-row--clickable"
+                      onClick={() => openTaskList('all', item.name)}
+                    >
+                      <div className="section-row__topline">
+                        <div>
+                          <strong>{item.name}</strong>
+                          <small>{item.done}/{item.total} done</small>
+                        </div>
+                        <span className="section-percent">{percent}%</span>
+                      </div>
+                      <div className="section-meter">
+                        <span style={{ width: `${percent}%` }} />
+                      </div>
+                    </button>
+                  );
+                })}
               </div>
             </section>
 

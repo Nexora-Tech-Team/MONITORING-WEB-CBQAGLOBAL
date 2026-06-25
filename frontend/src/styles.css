@@ -486,6 +486,14 @@ button {
   text-align: left;
 }
 
+.section-row__topline {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+}
+
 .section-row--clickable {
   cursor: pointer;
   transition: transform 160ms ease, background-color 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
@@ -510,6 +518,15 @@ button {
   display: block;
   margin: 6px 0 0;
   color: var(--muted);
+}
+
+.section-percent {
+  flex: 0 0 auto;
+  margin-top: 2px;
+  color: #d8f4f6;
+  font-size: 16px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .section-meter {
@@ -754,6 +771,14 @@ button {
   .recent-item {
     flex-direction: column;
     align-items: start;
+  }
+
+  .section-row__topline {
+    align-items: flex-start;
+  }
+
+  .section-percent {
+    margin-top: 0;
   }
 
   .create-task__grid {
